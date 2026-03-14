@@ -6,4 +6,4 @@ __pycache__/
 articles/
 newsfile.db
 logs/
-.DS_Store
+.DS_Store.env*
