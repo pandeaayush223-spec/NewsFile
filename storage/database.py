@@ -37,7 +37,7 @@ def get_all_stats() -> list:
     # For now just return all articles and we'll aggregate in the API layer
     # Select all articles, return .data
     try:
-        response = supabase.table("articles").select('*').execute()
+        response = supabase.table("articles").select('id, title, url, source, topic, summary, published_date, scraped_at, word_count').execute()
         return response.data
     except Exception as e:
         print(f'Unable to get stats: {e}')

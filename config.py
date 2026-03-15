@@ -7,6 +7,7 @@ if ENV == "production":
     load_dotenv(".env.production")
 else:
     load_dotenv(".env.development")
+    
 
 TOPICS = ['Technology', 'Economics', 'Politics', 'Health', 'Climate', 'Other'] 
 
@@ -30,6 +31,7 @@ MAX_ARTICLES_PER_TOPIC = 500
 
 ARTICLES_DIR = "articles"
 
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
