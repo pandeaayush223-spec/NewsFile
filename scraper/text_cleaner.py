@@ -9,6 +9,9 @@ def clean_html(html: str) -> str:
     
     body = soup.find("article") or soup.find("main") or soup.body
     
+    if not body:
+        return ""
+    
     paragraphs = body.find_all("p")
 
     text = "\n".join(p.get_text() for p in paragraphs)

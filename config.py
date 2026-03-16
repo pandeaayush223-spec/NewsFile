@@ -19,12 +19,13 @@ TOPIC_KEYWORDS = {"Technology": ["AI", "software", "Apple", "Google", "startup",
     "Other": []
 }
 
-RSS_FEEDS = {"Reuters":   "https://feeds.reuters.com/reuters/topNews",   
-    "BBC":         "http://feeds.bbci.co.uk/news/rss.xml",   
-    "AP News":     "https://rsshub.app/apnews/topics/ap-top-news",   
-    "TechCrunch":  "https://techcrunch.com/feed/",   
-    "Guardian":    "https://www.theguardian.com/world/rss",   
-    "NPR":         "https://feeds.npr.org/1001/rss.xml",   
+RSS_FEEDS = {
+    "Reuters": "https://news.google.com/rss/search?q=when:24h+allinurl:reuters.com&ceid=US:en&hl=en-US&gl=US",
+    "AP News": "https://news.google.com/rss/search?q=when:24h+site:apnews.com&ceid=US:en&hl=en-US&gl=US",    
+    "BBC": "http://feeds.bbci.co.uk/news/rss.xml",
+    "TechCrunch": "https://techcrunch.com/feed/",
+    "Guardian": "https://www.theguardian.com/world/rss",
+    "NPR": "https://feeds.npr.org/1001/rss.xml",
 }
 
 MAX_ARTICLES_PER_TOPIC = 500
