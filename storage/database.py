@@ -22,15 +22,23 @@ def article_exists(url: str) -> bool:
     return bool(response.data)
     
 
-def get_articles_by_topic(topic: str) -> list:
+def get_articles_by_topic(topic: str, days: int = None) -> list:
     # Select all articles where topic matches
     # Order by published_date descending so newest comes first
     # Return the .data list
     try :
-        response = supabase.table("articles").select('*').eq("topic", topic).order("published_date", desc=True).execute()
-        return response.data
+        query = supabase.table('articles')\
+        .select("id, title, url, source, topic, summary, published_date, word_count")\
+        .eq("topic", topic)\
+        .order("published_date", desc=True)
+        
+        if days:
+            cutoff = (datetime.utcnow() - timedelta(days=days)).isoformat()
+            query = query.gte("published_date", cutoff)
+        
+        return query.execute().data
     except Exception as e:
-        print(f'Unable to get Articles: {e}')
+        print(f"Unable to get articles: {e}")
         return []
 
 def get_all_stats() -> list:
@@ -65,10 +73,7 @@ def get_topics() -> list:
 
 def search_articles(query: str) -> list:
     try:
-        response = supabase.table("articles")\
-            .select("id, title, url, source, topic, summary, published_date, word_count")\
-            .or_(f"title.ilike.%{query}%,summary.ilike.%{query}%,full_text.ilike.%{query}%")\
-            .execute()
+        response = supabase.table("articles").select("*").ilike("title", f"%{query}%").execute()
         return response.data
     except Exception as e:
         print(f"Error searching articles: {e}")

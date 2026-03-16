@@ -6,7 +6,7 @@ import json
 router = APIRouter()
 
 @router.get('/articles')
-def get_articles(topic: str = None):
+def get_articles(topic: str = None, days: int = None):
     if topic:
         return get_articles_by_topic(topic)
     else: 
