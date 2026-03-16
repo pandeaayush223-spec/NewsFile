@@ -65,7 +65,10 @@ def get_topics() -> list:
 
 def search_articles(query: str) -> list:
     try:
-        response = supabase.table("articles").select("*").ilike("title", f"%{query}%").execute()
+        response = supabase.table("articles")\
+            .select("id, title, url, source, topic, summary, published_date, word_count")\
+            .or_(f"title.ilike.%{query}%,summary.ilike.%{query}%,full_text.ilike.%{query}%")\
+            .execute()
         return response.data
     except Exception as e:
         print(f"Error searching articles: {e}")
