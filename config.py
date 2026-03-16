@@ -9,13 +9,15 @@ else:
     load_dotenv(".env.development")
     
 
-TOPICS = ['Technology', 'Economics', 'Politics', 'Health', 'Climate', 'Other'] 
+TOPICS = ['Technology', 'AI', 'Economics', 'Politics', 'Health', 'Climate', 'Other']
 
-TOPIC_KEYWORDS = {"Technology": ["AI", "software", "Apple", "Google", "startup", "chip", "cyber", "tech", "data", "algorithm"],
-    "Economics":    ["stock", "Fed", "rate", "inflation", "bank", "market", "GDP", "economy", "invest", "dollar"],
-    "Politics":   ["congress", "senate", "election", "president", "vote", "policy", "democrat", "republican", "bill", "law"],
-    "Health":     ["vaccine", "cancer", "FDA", "drug", "hospital", "disease", "mental health", "study", "clinical"],
-    "Climate":    ["climate", "emissions", "carbon", "renewable", "flood", "wildfire", "EPA", "fossil", "solar"],
+TOPIC_KEYWORDS = {
+    "Technology": ["software", "Apple", "Google", "startup", "chip", "semiconductor", "cybersecurity", "algorithm", "smartphone", "app", "coding", "developer", "cloud", "hardware", "silicon", "Microsoft", "Meta", "robot"],
+    "AI": ["artificial intelligence", "machine learning", "large language model", "ChatGPT", "Gemini", "Claude", "neural network", "deep learning", "AI model", "generative AI", "LLM", "autonomous", "OpenAI"],
+    "Economics": ["stock", "Fed", "interest rate", "inflation", "bank", "market", "GDP", "economy", "investment", "dollar", "recession", "trade", "tariff", "earnings", "revenue", "fiscal", "monetary", "Wall Street"],
+    "Politics": ["congress", "senate", "election", "president", "vote", "policy", "democrat", "republican", "bill", "law", "parliament", "minister", "government", "White House", "legislation", "campaign", "diplomat"],
+    "Health": ["vaccine", "cancer", "FDA", "drug", "hospital", "disease", "mental health", "clinical trial", "pandemic", "surgery", "therapy", "CDC", "pharmaceutical", "outbreak", "diagnosis"],
+    "Climate": ["climate change", "emissions", "carbon", "renewable", "flood", "wildfire", "EPA", "fossil fuel", "solar", "wind energy", "drought", "deforestation", "greenhouse", "net zero"],
     "Other": []
 }
 
