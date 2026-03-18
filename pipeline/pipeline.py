@@ -2,10 +2,11 @@ from scraper.rss_scraper import fetch_all_feeds
 from scraper.article_fetcher import fetch_article_html
 from scraper.text_cleaner import clean_html
 from classifier.keyword_classifier import classify_article
-from storage.database import insert_article, article_exists
+from storage.database import insert_article, article_exists, prune_topic
 from storage.file_manager import save_article_json
 import hashlib
 from datetime import datetime
+import time
 
 def run_pipeline() -> None:
     articles = fetch_all_feeds()
@@ -16,6 +17,7 @@ def run_pipeline() -> None:
             print(f'the article {article} already exists in the database')
             continue
         html = fetch_article_html(article['url'])
+        time.sleep(1.5)
         full_text = clean_html(html)
         topic = classify_article(article['title'], article['summary'])
         article_id = hashlib.sha256(article["url"].encode()).hexdigest()[:16]
@@ -26,5 +28,6 @@ def run_pipeline() -> None:
 
         insert_article(complete_article)
         save_article_json(complete_article)
-        
+        prune_topic(topic)
+
         

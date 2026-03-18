@@ -1,5 +1,7 @@
 from supabase import create_client
 from config import SUPABASE_URL, SUPABASE_KEY
+from config import MAX_ARTICLES_PER_TOPIC
+
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
@@ -78,3 +80,25 @@ def search_articles(query: str) -> list:
     except Exception as e:
         print(f"Error searching articles: {e}")
         return []
+
+def prune_topic(topic: str) -> None:
+    # Query 1 — just count
+    response = supabase.table("articles").select("id").eq("topic", topic).execute()
+    count = len(response.data)
+    
+    if count <= MAX_ARTICLES_PER_TOPIC:
+        return
+    
+    excess = count - MAX_ARTICLES_PER_TOPIC
+    
+    # Query 2 — find oldest articles to delete
+    oldest = supabase.table("articles").select("id").eq("topic", topic).order("published_date", desc=False).limit(excess).execute()
+    
+    # Extract just the IDs from oldest.data
+    ids_to_delete = [row["id"] for row in oldest.data]
+    
+    # Delete those articles
+    supabase.table("articles").delete().in_("id", ids_to_delete).execute()
+    
+    # Log how many were pruned
+    print(f"Pruned {excess} articles from {topic}")
