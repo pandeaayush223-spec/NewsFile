@@ -9,3 +9,4 @@ newsfile.db
 logs/
 .DS_Store
 .env*
+backup

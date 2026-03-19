@@ -9,16 +9,49 @@ else:
     load_dotenv(".env.development")
     
 
-TOPICS = ['Technology', 'AI', 'Economics', 'Politics', 'Health', 'Climate', 'Other']
+# Nested topic hierarchy: parent topic → list of subtopics
+# Adjust subtopic names to match what you see in your articles
+TOPICS = {
+    "Technology": ["AI", "Cybersecurity", "Hardware", "Software"],
+    "Economics":  ["Markets", "Crypto", "Trade", "Fiscal Policy"],
+    "Politics":   ["US Politics", "International", "Legislation", "Conflicts"],
+    "Health":     ["Medicine", "Mental Health", "Public Health"],
+    "Climate":    ["Energy", "Environment", "Science"],
+    "Other":      [],
+}
 
+# Keywords keyed by SUBTOPIC (not parent topic)
+# Add or adjust keywords here to improve classification accuracy
 TOPIC_KEYWORDS = {
-    "Technology": ["software", "Apple", "Google", "startup", "chip", "semiconductor", "cybersecurity", "algorithm", "smartphone", "app", "coding", "developer", "cloud", "hardware", "silicon", "Microsoft", "Meta", "robot"],
-    "AI": ["artificial intelligence", "machine learning", "large language model", "ChatGPT", "Gemini", "Claude", "neural network", "deep learning", "AI model", "generative AI", "LLM", "autonomous", "OpenAI"],
-    "Economics": ["stock", "Fed", "interest rate", "inflation", "bank", "market", "GDP", "economy", "investment", "dollar", "recession", "trade", "tariff", "earnings", "revenue", "fiscal", "monetary", "Wall Street"],
-    "Politics": ["congress", "senate", "election", "president", "vote", "policy", "democrat", "republican", "bill", "law", "parliament", "minister", "government", "White House", "legislation", "campaign", "diplomat"],
-    "Health": ["vaccine", "cancer", "FDA", "drug", "hospital", "disease", "mental health", "clinical trial", "pandemic", "surgery", "therapy", "CDC", "pharmaceutical", "outbreak", "diagnosis"],
-    "Climate": ["climate change", "emissions", "carbon", "renewable", "flood", "wildfire", "EPA", "fossil fuel", "solar", "wind energy", "drought", "deforestation", "greenhouse", "net zero"],
-    "Other": []
+    # Technology subtopics
+    "AI":["artificial intelligence", "machine learning", "large language model", "ChatGPT", "Gemini", "Claude", "neural network", "deep learning", "generative AI", "LLM", "OpenAI", "Anthropic"],
+    "Cybersecurity":["cybersecurity", "hacker", "breach", "vulnerability", "ransomware", "malware", "phishing", "encryption", "zero-day"],
+    "Hardware":  ["chip", "semiconductor", "hardware", "silicon", "robot", "processor", "GPU", "Intel", "NVIDIA"],
+    "Software":      ["software", "app development", "developer tools", "open source", "cloud computing", "SaaS"],
+
+    # Economics subtopics
+    "Markets":       ["stock market", "Fed rate", "interest rate", "inflation", "Wall Street", "GDP", "recession", "S&P", "earnings report"],
+    "Crypto":       ["crypto", "bitcoin", "ethereum", "blockchain", "NFT", "web3"],
+    "Trade":        ["trade", "tariff", "import", "export", "supply chain"],
+    "Fiscal Policy":["fiscal", "monetary", "budget", "spending", "deficit"],
+
+    # Politics subtopics
+    "US Politics":  ["congress", "senate", "election", "president", "vote", "democrat", "republican", "White House", "campaign"],
+    "International": ["foreign policy", "diplomat", "treaty", "United Nations", "NATO", "bilateral", "summit"],
+    "Legislation":  ["bill", "law", "government", "legislation", "regulation", "policy"],
+    "Conflicts":    ["war", "military", "troops", "conflict", "sanctions", "ceasefire", "attack"],
+
+    # Health subtopics
+    "Medicine":     ["vaccine", "cancer", "FDA", "drug", "hospital", "disease", "clinical trial", "surgery", "CDC", "pharmaceutical", "diagnosis"],
+    "Mental Health":["mental health", "therapy", "anxiety", "depression", "wellbeing", "psychiatry"],
+    "Public Health":["pandemic", "outbreak", "public health", "epidemic", "WHO"],
+
+    # Climate subtopics
+    "Energy":       ["renewable", "solar", "wind energy", "fossil fuel", "oil", "gas", "nuclear energy", "EPA"],
+    "Environment":  ["climate change", "emissions", "carbon", "flood", "wildfire", "drought", "deforestation", "greenhouse", "net zero"],
+    "Science":      ["research", "study", "scientist", "discovery", "experiment", "space", "NASA"],
+
+    "Other":        [],
 }
 
 RSS_FEEDS = {
@@ -26,8 +59,8 @@ RSS_FEEDS = {
     "AP News": "https://news.google.com/rss/search?q=when:24h+site:apnews.com&ceid=US:en&hl=en-US&gl=US",    
     "BBC": "http://feeds.bbci.co.uk/news/rss.xml",
     "TechCrunch": "https://techcrunch.com/feed/",
-    "Guardian": "https://www.theguardian.com/world/rss",
-    "NPR": "https://feeds.npr.org/1001/rss.xml",
+    # "Guardian": "https://www.theguardian.com/world/rss",  # returning 0 entries
+    # "NPR": "https://feeds.npr.org/1001/rss.xml",          # blocking requests
 }
 
 MAX_ARTICLES_PER_TOPIC = 500

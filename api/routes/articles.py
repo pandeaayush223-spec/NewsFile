@@ -6,10 +6,10 @@ import json
 router = APIRouter()
 
 @router.get('/articles')
-def get_articles(topic: str = None, days: int = None):
+def get_articles(topic: str = None, subtopic: str = None, days: int = None):
     if topic:
-        return get_articles_by_topic(topic)
-    else: 
+        return get_articles_by_topic(topic, days=days, subtopic=subtopic)
+    else:
         return get_all_stats()
     
 @router.get('/articles/{article_id}')

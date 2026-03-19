@@ -1,6 +1,10 @@
 import feedparser
 from config import RSS_FEEDS
 
+from logger import get_logger
+
+logger = get_logger(__name__)
+
 def parse_feed(source_name: str, feed_url: str) -> list:
     # feedparser.parse(feed_url) returns a feed object
     # feed.entries is the list of articles in that feed
@@ -15,10 +19,10 @@ def parse_feed(source_name: str, feed_url: str) -> list:
         feed = feedparser.parse(feed_url)
         
         if not feed.entries:
-            print(f"No entries found in {source_name} feed: {feed_url}")
+            logger.warning(f"No entries found in {source_name} feed: {feed_url}")
             return []
     except Exception as e:
-        print(f'Error fetching feed {source_name}: {str(e)}')
+        logger.error(f'Error fetching feed {source_name}: {str(e)}')
         return []
         
     feed_list = []

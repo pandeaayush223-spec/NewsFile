@@ -1,6 +1,10 @@
 from groq import Groq
 from config import GROQ_API_KEY
 
+from logger import get_logger
+
+logger = get_logger(__name__)
+
 client = Groq(api_key=GROQ_API_KEY)
 
 def extract_stats(title, article_text):
@@ -23,5 +27,5 @@ Return ONLY this exact JSON structure with no markdown, no explanation:
         )
         return response.choices[0].message.content
     except Exception as e:
-        print(f"Groq error: {e}")
+        logger.error(f"Groq error: {e}")
         return None

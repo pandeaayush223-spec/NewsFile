@@ -1,3 +1,4 @@
+from logger import get_logger
 from scraper.rss_scraper import fetch_all_feeds
 from scraper.article_fetcher import fetch_article_html
 from scraper.text_cleaner import clean_html
@@ -8,21 +9,23 @@ import hashlib
 from datetime import datetime
 import time
 
+logger = get_logger(__name__)
+
 def run_pipeline() -> None:
     articles = fetch_all_feeds()
-    print(f"Found {len(articles)} articles from feeds")
-    
+    logger.info(f"Found {len(articles)} articles from feeds")
+
     for article in articles:
         if article_exists(article['url']):
-            print(f'the article {article} already exists in the database')
+            logger.debug(f"Skipping duplicate: {article['url']}")
             continue
         html = fetch_article_html(article['url'])
-        time.sleep(1.5)
+        time.sleep(0.5)
         full_text = clean_html(html)
-        topic = classify_article(article['title'], article['summary'])
+        topic, subtopic = classify_article(article['title'], article['summary'])
         article_id = hashlib.sha256(article["url"].encode()).hexdigest()[:16]
-        
-        complete_article = {"id": article_id, "title": article["title"], "url": article["url"], "source": article["source"], "topic": topic, "summary": article["summary"], 
+
+        complete_article = {"id": article_id, "title": article["title"], "url": article["url"], "source": article["source"], "topic": topic, "subtopic": subtopic, "summary": article["summary"],
             "full_text": full_text, "published_date": article["published"], "scraped_at": datetime.utcnow().isoformat(),  "word_count": len(full_text.split())
 }
 
