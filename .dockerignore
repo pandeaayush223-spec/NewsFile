@@ -1,0 +1,37 @@
+# flyctl launch added from .gitignore
+**/.env.development
+**/.env.production
+**/venv
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/articles
+**/newsfile.db
+**/logs
+**/.DS_Store
+**/.env*
+**/backup
+
+# flyctl launch added from newsfile-frontend/.gitignore
+# v0 sandbox internal files
+newsfile-frontend/**/__v0_runtime_loader.js
+newsfile-frontend/**/__v0_devtools.tsx
+newsfile-frontend/**/__v0_jsx-dev-runtime.ts
+newsfile-frontend/**/.npmrc
+newsfile-frontend/**/.snowflake
+newsfile-frontend/**/.v0-trash
+newsfile-frontend/**/.vercel
+newsfile-frontend/**/next.user-config.*
+
+# Environment variables
+newsfile-frontend/**/.env*.local
+
+# Common ignores
+newsfile-frontend/**/node_modules
+newsfile-frontend/**/.next
+newsfile-frontend/**/.DS_Store
+
+# flyctl launch added from venv/.gitignore
+# Created by venv; see https://docs.python.org/3/library/venv.html
+venv/**/*
+fly.toml
