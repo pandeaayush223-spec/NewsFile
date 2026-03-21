@@ -1,5 +1,6 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from pipeline.pipeline import run_pipeline
+from backup import run_backup  # ← add this
 from config import REFRESH_INTERVAL_MINS
 from logger import get_logger
 
