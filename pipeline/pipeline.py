@@ -1,12 +1,12 @@
 from logger import get_logger
 from scraper.rss_scraper import fetch_all_feeds
 from scraper.article_fetcher import fetch_article_html
-from scraper.text_cleaner import clean_html
+from scraper.text_cleaner import clean_html, clean_summary  
 from classifier.keyword_classifier import classify_article
 from storage.database import insert_article, article_exists, prune_topic
 from storage.file_manager import save_article_json
 import hashlib
-from datetime import datetime
+from datetime import datetime, timezone
 import time
 
 logger = get_logger(__name__)
@@ -25,8 +25,8 @@ def run_pipeline() -> None:
         topic, subtopic = classify_article(article['title'], article['summary'])
         article_id = hashlib.sha256(article["url"].encode()).hexdigest()[:16]
 
-        complete_article = {"id": article_id, "title": article["title"], "url": article["url"], "source": article["source"], "topic": topic, "subtopic": subtopic, "summary": article["summary"],
-            "full_text": full_text, "published_date": article["published"], "scraped_at": datetime.utcnow().isoformat(),  "word_count": len(full_text.split())
+        complete_article = {"id": article_id, "title": article["title"], "url": article["url"], "source": article["source"], "topic": topic, "subtopic": subtopic, "summary": clean_summary(article["summary"]),
+            "full_text": full_text, "published_date": article["published"], "scraped_at": datetime.now(timezone.utc).isoformat(),  "word_count": len(full_text.split())
 }
 
         insert_article(complete_article)

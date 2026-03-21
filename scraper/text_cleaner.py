@@ -18,4 +18,9 @@ def clean_html(html: str) -> str:
     
     return text
 
+def clean_summary(summary: str) -> str:
+    if not summary:
+        return ""
+    soup = BeautifulSoup(summary, "lxml")
+    return soup.get_text(separator=" ").strip()
         
