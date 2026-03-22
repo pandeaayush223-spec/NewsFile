@@ -28,7 +28,7 @@ def parse_feed(source_name: str, feed_url: str) -> list:
     feed_list = []
 
     for entry in feed.entries:
-        feed_list.append({'title': entry.title,
+        feed_list.append({'title': entry.title.split(" - ")[0].strip(),
         'url': entry.link, 
         'summary': entry.get("summary", ""),
         'published': entry.get("published", ""),
