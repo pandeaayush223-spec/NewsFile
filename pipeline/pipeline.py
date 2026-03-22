@@ -22,6 +22,8 @@ def run_pipeline() -> None:
         html = fetch_article_html(article['url'])
         time.sleep(0.5)
         full_text = clean_html(html)
+        if not full_text:
+            full_text = clean_summary(article.get('summary', ''))
         topic, subtopic = classify_article(article['title'], article['summary'])
         article_id = hashlib.sha256(article["url"].encode()).hexdigest()[:16]
 
