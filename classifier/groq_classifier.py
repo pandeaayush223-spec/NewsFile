@@ -14,17 +14,27 @@ _TOPICS_TEXT = "\n".join(
     if subtopics
 )
 
+_SYSTEM_PROMPT = f"""You are a news article classifier. Given an article title and summary, return ONLY a JSON object with no markdown and no explanation.
+
+VALID TOPICS AND SUBTOPICS (you MUST only pick from this exact list):
+{_TOPICS_TEXT}
+  Other: (use when no topic fits)
+
+You MUST only return topics from this exact list. Do not invent new topics. Topics like "Sports", "Entertainment", "Arts", "Celebrity", "Culture", or any other topic not listed above do NOT exist — use {{"topic": "Other", "subtopic": null}} for those.
+
+Examples:
+- Title: "NBA playoffs: Lakers advance to finals" → {{"topic": "Other", "subtopic": null}}
+- Title: "Fed raises rates by 25 basis points" → {{"topic": "Economics", "subtopic": "Markets"}}
+- Title: "Trump signs sweeping immigration bill" → {{"topic": "Politics", "subtopic": "Legislation"}}
+- Title: "Taylor Swift breaks streaming record" → {{"topic": "Other", "subtopic": null}}
+- Title: "OpenAI releases GPT-5" → {{"topic": "Technology", "subtopic": "AI"}}
+
+Return format: {{"topic": "ParentTopic", "subtopic": "Subtopic"}} or {{"topic": "Other", "subtopic": null}}"""
+
 def groq_classify(title: str, summary: str) -> tuple[str, str | None]:
     """Use Groq to classify an article into topic and subtopic."""
     try:
-        system = (
-            "You are a news article classifier. Given an article, return ONLY a JSON object "
-            "with no markdown and no explanation.\n"
-            "Use exactly one of these topics and subtopics:\n"
-            f"{_TOPICS_TEXT}\n"
-            'Return format: {"topic": "ParentTopic", "subtopic": "Subtopic"}\n'
-            'If the article does not fit any topic, return {"topic": "Other", "subtopic": null}'
-        )
+        system = _SYSTEM_PROMPT
         user = f"Title: {title}\n\nSummary: {summary[:300]}"
 
         response = client.chat.completions.create(
