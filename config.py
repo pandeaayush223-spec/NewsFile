@@ -26,30 +26,30 @@ TOPIC_KEYWORDS = {
     # Technology subtopics
     "AI":["artificial intelligence", "machine learning", "large language model", "ChatGPT", "Gemini", "Claude", "neural network", "deep learning", "generative AI", "LLM", "OpenAI", "Anthropic"],
     "Cybersecurity":["cybersecurity", "hacker", "breach", "vulnerability", "ransomware", "malware", "phishing", "encryption", "zero-day"],
-    "Hardware":  ["chip", "semiconductor", "hardware", "silicon", "robot", "processor", "GPU", "Intel", "NVIDIA"],
+    "Hardware":  ["computer chip", "semiconductor", "hardware", "silicon chip", "robotics", "processor", "GPU", "Intel", "NVIDIA"],
     "Software":      ["software", "app development", "developer tools", "open source", "cloud computing", "SaaS"],
 
     # Economics subtopics
     "Markets":       ["stock market", "Fed rate", "interest rate", "inflation", "Wall Street", "GDP", "recession", "S&P", "earnings report"],
     "Crypto":       ["crypto", "bitcoin", "ethereum", "blockchain", "NFT", "web3"],
-    "Trade":        ["trade", "tariff", "import", "export", "supply chain"],
+    "Trade":        ["trade deal", "tariff", "import tariff", "export ban", "supply chain"],
     "Fiscal Policy":["fiscal", "monetary", "budget", "spending", "deficit"],
 
     # Politics subtopics
     "US Politics":  ["congress", "senate", "election", "president", "vote", "democrat", "republican", "White House", "campaign"],
     "International": ["foreign policy", "diplomat", "treaty", "United Nations", "NATO", "bilateral", "summit"],
-    "Legislation":  ["bill", "law", "government", "legislation", "regulation", "policy"],
-    "Conflicts":    ["war", "military", "troops", "conflict", "sanctions", "ceasefire", "attack"],
+    "Legislation":  ["senate bill", "new law", "legislation", "regulation", "policy"],
+    "Conflicts":    ["war", "military", "troops", "conflict", "sanctions", "ceasefire", "military attack"],
 
     # Health subtopics
-    "Medicine":     ["vaccine", "cancer", "FDA", "drug", "hospital", "disease", "clinical trial", "surgery", "CDC", "pharmaceutical", "diagnosis"],
+    "Medicine":     ["vaccine", "cancer", "FDA", "drug approval", "hospital", "infectious disease", "clinical trial", "surgery", "CDC", "pharmaceutical", "diagnosis"],
     "Mental Health":["mental health", "therapy", "anxiety", "depression", "wellbeing", "psychiatry"],
     "Public Health":["pandemic", "outbreak", "public health", "epidemic", "WHO"],
 
     # Climate subtopics
-    "Energy":       ["renewable", "solar", "wind energy", "fossil fuel", "oil", "gas", "nuclear energy", "EPA"],
+    "Energy":       ["renewable", "solar", "wind energy", "fossil fuel", "oil price", "natural gas", "nuclear energy", "EPA"],
     "Environment":  ["climate change", "emissions", "carbon", "flood", "wildfire", "drought", "deforestation", "greenhouse", "net zero"],
-    "Science":      ["research", "study", "scientist", "discovery", "experiment", "space", "NASA"],
+    "Science":      ["scientific research", "scientific study", "scientist", "discovery", "experiment", "space mission", "NASA"],
 
     "Other":        [],
 }
