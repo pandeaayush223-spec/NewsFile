@@ -1,7 +1,9 @@
 from logger import get_logger
-from scraper.rss_scraper import fetch_all_feeds
+from scraper.gnews_fetcher import fetch_gnews
+from scraper.guardian_fetcher import fetch_guardian
+from scraper.mediastack_fetcher import fetch_mediastack
 from scraper.article_fetcher import fetch_article_html
-from scraper.text_cleaner import clean_html, clean_summary  
+from scraper.text_cleaner import clean_html, clean_summary
 from classifier.classifier import classify
 from storage.database import insert_article, article_exists, prune_topic
 from storage.file_manager import save_article_json
@@ -12,7 +14,7 @@ import time
 logger = get_logger(__name__)
 
 def run_pipeline() -> None:
-    articles = fetch_all_feeds()
+    articles = fetch_gnews() + fetch_guardian() + fetch_mediastack()
     logger.info(f"Found {len(articles)} articles from feeds")
 
     for article in articles:

@@ -1,48 +1,21 @@
 # NEWSFILE — Remaining Todos
 
-## 🐛 Bugs
+## 🧹 HTML Parsing Improvements ✅
 
-### Bug 1 — Miscategorized articles
-Articles are being classified into wrong topics (e.g. tech articles showing under Health).
-- File: `classifier/keyword_classifier.py` and `config.py`
-- The keyword matching is too broad. Tighten keywords in `TOPIC_KEYWORDS` in `config.py` to use multi-word phrases instead of single common words.
-- Example: change `"stock"` to `"stock market"`, change `"app"` to `"app development"`
+- Expand tag removal: `figure`, `figcaption`, `aside`, `picture` and CSS class selectors for captions/share/social/byline/credit
+- Filter paragraphs shorter than 8 words (catches "Share:", "Imago", timestamps)
+- Filter boilerplate strings: "copyright", "please enable js", "ad blocker", etc.
+- Deduplicate paragraphs before joining
+- Detect JS-gated pages in `article_fetcher.py` and return `""` so pipeline falls back to summary
 
 ---
 
-## 🔌 Feed Overhaul
+## 🎯 Topic Scope Narrowing
 
-Replace RSS feeds with proper news APIs for better article quality and coverage.
-
-### Task 1 — GNews API fetcher
-- Create `scraper/gnews_fetcher.py`
-- Sign up at https://gnews.io and add `GNEWS_API_KEY` to `.env.development`
-- Fetch top headlines across all topics
-- Return list of dicts with: `title`, `url`, `summary`, `published`, `source`
-- Handle API errors gracefully with logger
-
-### Task 2 — Guardian API fetcher
-- Create `scraper/guardian_fetcher.py`
-- Sign up at https://bonobo.capi.gutools.co.uk/register/developer and add `GUARDIAN_API_KEY` to `.env.development`
-- Fetch latest articles, request `body` field for full text
-- Return list of dicts with: `title`, `url`, `summary`, `full_text`, `published`, `source`
-
-### Task 3 — Mediastack API fetcher
-- Create `scraper/mediastack_fetcher.py`
-- Sign up at https://mediastack.com and add `MEDIASTACK_API_KEY` to `.env.development`
-- Fetch latest news as supplementary source
-- Return list of dicts with: `title`, `url`, `summary`, `published`, `source`
-
-### Task 4 — Update pipeline to use new fetchers
-- In `pipeline/pipeline.py`, import and call all three new fetchers
-- Combine results from all three into one list
-- Keep existing deduplication logic (`article_exists(url)`)
-- Remove or comment out the old RSS scraper call (`fetch_all_feeds`)
-
-### Task 5 — Update config.py
-- Remove `RSS_FEEDS` dict
-- Add API key env var reads: `GNEWS_API_KEY`, `GUARDIAN_API_KEY`, `MEDIASTACK_API_KEY`
-- Keep everything else the same
+- Restrict accepted topics to: Politics, Economics, Geopolitics, Climate, Health, AI policy
+- Articles classified as Sports, Entertainment, Arts, or other off-topic categories should be rejected (not inserted into the database)
+- Update `pipeline/pipeline.py` to skip articles where `topic` is not in the approved set
+- Update `config.py` TOPICS dict to reflect the narrowed scope
 
 ---
 
@@ -61,7 +34,13 @@ Replace RSS feeds with proper news APIs for better article quality and coverage.
 - Return articles sorted by stat relevance
 - Add a "Stats Search" toggle button in the frontend search bar
 
-### Feature 3 — Evidence block generator
+### Feature 3 — Better stats visualizations
+- Improve charts in the stats panel (`app/page.tsx`)
+- Consider multiple chart types (bar, line, pie) depending on the data shape
+- Show trend lines where applicable
+- Improve empty/loading states
+
+### Feature 4 — Evidence block generator
 - Add new endpoint: `POST /articles/{id}/evidence`
 - Use Groq to generate a formatted debate evidence block from the article
 - Output format:
@@ -74,6 +53,24 @@ Replace RSS feeds with proper news APIs for better article quality and coverage.
   ```
 - Add "Evidence Block" button in the article modal in `app/page.tsx`, next to "View Stats"
 - Display the evidence block in a monospace/card-style panel below the article header
+
+---
+
+## 🚩 User Reporting System
+
+- Add `POST /articles/{id}/report` endpoint — user flags an article as misclassified
+- Store reports in a Supabase `reports` table with `article_id`, `reported_topic`, `suggested_topic`, `timestamp`
+- Add a small "Wrong topic?" button in the article card or modal in the frontend
+- (Later) Use report data to retrain or adjust keyword thresholds
+
+---
+
+## 🏷️ Subtopic Classification (Backend + Frontend)
+
+- Backend: expose subtopic filtering via the API (e.g. `GET /articles?topic=Technology&subtopic=AI`)
+- Frontend: add subtopic UI — when a topic is selected, show its subtopics as a secondary filter row
+- Groq should handle subtopic assignment for articles that fall through keyword classification (already partially done via `classify()` in `classifier/classifier.py` — verify Groq is actually returning valid subtopics, not just `null`)
+- Confirm subtopics are being stored correctly in Supabase and returned in API responses
 
 ---
 
